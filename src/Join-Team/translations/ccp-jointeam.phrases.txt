@@ -1,0 +1,106 @@
+"Phrases"
+{
+    "team_template"
+    {
+        "ru"                "{MSGCO}Игрок {NAMECO}{NAME} {MSGCO}присоединился к команде {TEAMCO}{TEAM}"
+        "en"                "{MSGCO}Player {NAMECO}{NAME} {MSGCO}connected to team {TEAMCO}{TEAM}"
+    }
+
+    "status_died"
+    {
+        "ru"                "x"
+        "en"                "x"
+    }
+
+    "status_alive"
+    {
+        "ru"                "v"
+        "en"                "v"
+    }
+
+    "status_died_color"
+    {
+        "ru"                "{R}"
+        "en"                "{R}"
+    }
+
+    "status_alive_color"
+    {
+        "ru"                "{G}"
+        "en"                "{G}"
+    }
+
+    "team_unknown"
+    {
+        "ru"                "Неизвестно"
+        "en"                "Unknown"
+    }
+
+    "team_auto"
+    {
+        "ru"                "Случайно"
+        "en"                "Random"
+    }
+
+    "team_red"
+    {
+        "ru"                "Террористов"
+        "en"                "Terrorists"
+    }
+
+    "team_blue"
+    {
+        "ru"                "Спецназовцев"
+        "en"                "Counter-Terrorists"
+    }
+
+    "team_unknown_color"
+    {
+        "ru"                "{GR}"
+        "en"                "{GR}"
+    }
+
+    "team_auto_color"
+    {
+        "ru"                "{GO}"
+        "en"                "{GO}"
+    }
+
+    "team_red_color"
+    {
+        "ru"                "{R}"
+        "en"                "{R}"
+    }
+
+    "team_blue_color"
+    {
+        "ru"                "{B}"
+        "en"                "{B}"
+    }
+
+
+    // default value for channel
+    "chattag"
+    {
+        "ru"                ""
+        "en"                ""
+    }
+
+    "chattag_color"
+    {
+        "ru"                ""
+        "en"                ""
+    }
+
+    "name_color"
+    {
+        "ru"                "{G}"
+        "en"                "{G}"
+    }
+
+    "message_color"
+    {
+        "ru"                "{W}"
+        "en"                "{W}"
+    }
+}

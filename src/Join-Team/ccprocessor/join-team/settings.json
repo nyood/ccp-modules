@@ -1,0 +1,38 @@
+{
+    "identificator":        "TM1",
+
+    "useLog":               false,
+
+    "processing":           true,
+    "hideMessages":         false,
+
+    "priority":             1,
+
+    "{PROTOTYPE}":          "team_template",
+    "{STATUS}": [
+                            "status_died",
+                            "status_alive"
+    ],
+    "{STATUSCO}":[
+                            "status_died_color",
+                            "status_alive_color"
+    ],
+    "{TEAM}": [
+                            "team_unknown",
+                            "team_auto",
+                            "team_red",
+                            "team_blue"
+    ],
+
+    "{TEAMCO}": [
+                            "team_unknown_color",
+                            "team_auto_color",
+                            "team_red_color",
+                            "team_blue_color"
+    ],
+
+    "{PREFIX}":             "chattag",
+    "{PREFIXCO}":           "chattag_color",
+    "{NAMECO}":             "name_color",
+    "{MSGCO}":              "message_color"
+}
