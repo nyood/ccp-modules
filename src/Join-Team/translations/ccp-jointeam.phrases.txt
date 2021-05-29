@@ -36,10 +36,11 @@
         "en"                "Unknown"
     }
 
+    // team spec
     "team_auto"
     {
-        "ru"                "Случайно"
-        "en"                "Random"
+        "ru"                "Наблюдателей"
+        "en"                "Spectators"
     }
 
     "team_red"

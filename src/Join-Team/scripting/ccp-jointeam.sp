@@ -22,7 +22,9 @@ public Plugin myinfo =
 
 static const char pkgKey[] = "join_team";
 
-static const char objectPattern[] = "joinTeam@%x";
+static const char objectPattern[] = "joinTeam@%d";
+
+int counter;
 
 JSONObject jConfig;
 JSONObject jMessanger;
@@ -65,6 +67,8 @@ public void OnMapStart() {
             }
         }
     }
+
+    counter = 0;
 
     delete jMessanger;
     jMessanger = new JSONObject();
@@ -137,7 +141,7 @@ Action EventTeam(Event event, const char[] name, bool dbc) {
     message.SetInt("team", iTeam);
     message.SetString("userName", szName);
 
-    FormatEx(szName, sizeof(szName), objectPattern, message);
+    FormatEx(szName, sizeof(szName), objectPattern, counter++);
     
     jMessanger.Set(szName, message);
     delete message;
@@ -192,6 +196,8 @@ public Processing cc_proc_OnRebuildString(const int[] props, int part, ArrayList
     static char szBuffer[MESSAGE_LENGTH];
     jConfig.GetString("identificator", szBuffer, sizeof(szBuffer));
 
+    // LogMessage("Ident(now): %s, Ident(expected): %s, MessagerHas: %b", szIdent, szBuffer, jMessanger.HasKey(currentObject));
+
     if(strcmp(szIdent, szBuffer) != 0 || !currentObject[0] || !jMessanger.HasKey(currentObject)) {
         return Proc_Continue;
     }
@@ -201,6 +207,7 @@ public Processing cc_proc_OnRebuildString(const int[] props, int part, ArrayList
         return Proc_Continue;
 
     level = priority;
+    // LogMessage("Level now: %d", level);
 
     JSONObject message = asJSONO(jMessanger.Get(currentObject));
 
@@ -223,7 +230,7 @@ public Processing cc_proc_OnRebuildString(const int[] props, int part, ArrayList
 
         case BIND_STATUS, BIND_STATUS_CO: {
             if(jConfig.HasKey(szBinds[part]) && (jValues = asJSONA(jConfig.Get(szBinds[part]))) && jValues.Length) {
-                jValues.GetString(1, value, size); // server already alive :/
+                jValues.GetString(1, value, size); // server is always alive :/
                 Format(value, size, "%T", value, props[2]);
             }
         }
