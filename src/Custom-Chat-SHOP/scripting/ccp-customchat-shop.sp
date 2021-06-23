@@ -1,12 +1,10 @@
 #pragma newdecls required
 
+#define INCLUDE_RIPJSON
+
 #include <ccprocessor>
 #include <shop>
 #include <ccprocessor_pkg>
-
-#undef REQUIRE_EXTENSIONS
-#include <ripext_m>
-#define REQUIRE_EXTENSIONS
 
 #define SZ(%0) %0, sizeof(%0)
 
@@ -15,7 +13,7 @@ public Plugin myinfo =
 	name = "[CCP] Custom Chat <SHOP>",
 	author = "nullent?",
 	description = "...",
-	version = "1.5.5",
+	version = "1.6.0",
 	url = "discord.gg/ChTyPUG"
 };
 
@@ -70,58 +68,64 @@ public void onChange(ConVar convar, const char[] oldVal, const char[] newVal)
     levels[part] = convar.IntValue;
 }
 
-public void ccp_OnPackageAvailable(int iClient, Handle hPkg) {
-    if(!hPkg) {
+public void ccp_OnPackageAvailable(int iClient, Handle jsonObj) {
+    static const char cloud[]           = "cloud";
+    static char config[MESSAGE_LENGTH]  = "configs/shop/ccprocessor/shop_chat.json";
+
+    JSONObject objPackage = asJSONO(jsonObj);
+
+    if(!objPackage) {
         return;
     }
 
-    JSONObject pkg = asJSONO(hPkg);
-    JSONObject obj;
+    // Loaded from cloud
+    if(objPackage.HasKey(pkgKey) && objPackage.HasKey(cloud) && objPackage.GetBool(cloud)) {
+        return;
+    }
+
+    JSONObject objData;
 
     if(!iClient) {
-        static char config[MESSAGE_LENGTH] = "configs/shop/ccprocessor/shop_chat.json";
-
+        // Load from local
         if(config[0] == 'c') {
             BuildPath(Path_SM, config, sizeof(config), config);
-        }
-
+        } 
+        
         if(!FileExists(config)) {
             SetFailState("Config file is not exists: %s", config);
         }
-        
-        obj = JSONObject.FromFile(config, 0);
-        pkg.Set(pkgKey, obj);
-    
-        if(Shop_IsStarted())
-            RegisterCategorys();
-    } else if(pkg.HasKey("auth")) {
-        obj = new JSONObject();
-        for(int i; i < BIND_MAX; i++)
-            obj.SetNull(szBinds[i]);
-        
-        pkg.Set(pkgKey, obj);
+
+        objData = JSONObject.FromFile(config, 0);
     }
 
-    delete obj;
+    if(!objData) {
+        objData = new JSONObject();
+    }
+
+    objPackage.Set(pkgKey, objData);
+
+    delete objData;
 }
 
-public void OnMapStart()
-{
+public void OnMapStart() {
+    // Handshake
     cc_proc_APIHandShake(cc_get_APIKey());
+
     manageConVars(false);
 
+    // late load
     if(g_bLate) {
         g_bLate = false;
-        Handle obj;
+
         for(int i; i <= MaxClients; i++) {
-            if((obj = ccp_GetPackage(i)) != null) {
-                ccp_OnPackageAvailable(i, obj);
+            if(!i || (IsClientInGame(i) && !IsFakeClient(i) && IsClientAuthorized(i))) {
+                ccp_OnPackageAvailable(i, ccp_GetPackage(i));
             }
         }
+    }
 
-        if(Shop_IsStarted()) {
-            Shop_Started();
-        }
+    if(Shop_IsStarted()) {
+        Shop_Started();
     }
 }
 
@@ -152,7 +156,6 @@ void RegisterCategorys() {
 
     CategoryId id;
 
-    char szBuffer[MESSAGE_LENGTH];
     for(int i; i < BIND_MAX; i++ ) {
         if(!obj.HasKey(szBinds[i])) {
             continue;
@@ -173,18 +176,10 @@ void RegisterCategorys() {
             continue;
         }
 
-        for(int j, p, s, d; j < jsonPart.Length; j++) {
-            item = asJSONO(jsonPart.Get(j));
-            if(!item) {
-                continue;
+        for(int j; j < jsonPart.Length; j++) {
+            if((item = asJSONO(jsonPart.Get(j)))) {
+                RegisterItem(id, item);
             }
-
-            item.GetString("value", szBuffer, sizeof(szBuffer));
-            p = item.GetInt("price");
-            s = item.GetInt("sellprice");
-            d = item.GetInt("duration");
-
-            RegisterItem(id, szBuffer, szBuffer, szBuffer, p, s, d);
 
             delete item;
         }
@@ -195,12 +190,15 @@ void RegisterCategorys() {
     delete obj;
 }
 
-void RegisterItem(CategoryId cid, const char[] item_key, const char[] item_name, const char[] item_value, int p, int s, int d)
+void RegisterItem(CategoryId cid, JSONObject item)
 {
-    if(Shop_StartItem(cid, item_key))
+    char szBuffer[NAME_LENGTH];
+    item.GetString("value", szBuffer, sizeof(szBuffer));
+
+    if(Shop_StartItem(cid, szBuffer))
     {
-        Shop_SetInfo(item_name, NULL_STRING, p, s, g_IType, d);
-        Shop_SetCallbacks(OnItemRegistered, OnItemToogle, _, OnItemDisplay, _, _, _, OnItemSell);
+        Shop_SetInfo(szBuffer, NULL_STRING, item.GetInt("price"), item.GetInt("sellprice"), g_IType, item.GetInt("duration"));
+        Shop_SetCallbacks(OnItemRegistered, OnItemToogle, _, OnItemDisplay, _, _, OnItemBuy, OnItemSell);
             
         Shop_EndItem();
     }
@@ -222,6 +220,9 @@ public ShopAction OnItemToogle(int iClient, CategoryId category_id, const char[]
     if(obj && IsPartValid(obj, part)) {
         obj.GetString(szBinds[part], szValue, sizeof(szValue));
     }
+
+    if(!obj)
+        obj = new JSONObject();
 
     if(szValue[0])
     {
@@ -264,12 +265,43 @@ public bool OnCategoryDisplayed(int client, CategoryId category_id, const char[]
     return true;
 }
 
+public bool OnItemBuy(int client, CategoryId category_id, const char[] category, ItemId item_id, const char[] item, ItemType type, int price, int sell_price, int value) {
+    JSONObject clientObject = asJSONO(ccp_GetPackage(client));
+    JSONObject serverModel = getClientModel(0);
+
+    bool stop = !serverModel || (!clientObject.HasKey("auth") && serverModel.GetBool("secure"));
+
+    delete serverModel;
+
+    if(stop)
+        PrintToChat(client, "%T", "secure_restriction", client);
+
+    return !stop;  
+}
+
 public bool OnItemSell(int client, CategoryId category_id, const char[] category, ItemId item_id, const char[] item, ItemType type, int sell_price)
 {
+    JSONObject obj = asJSONO(ccp_GetPackage(client));
+    JSONObject serverModel = getClientModel(0);
+
+    if(!serverModel || (!obj.HasKey("auth") && serverModel.GetBool("secure"))) {
+        delete serverModel;
+
+        PrintToChat(client, "%T", "secure_restriction", client);
+        return false;
+    }
+
+    delete serverModel;
+
     int part = BindFromString(category);
 
     char szValue[MESSAGE_LENGTH];
-    JSONObject obj = getClientModel(client);
+    obj = getClientModel(client);
+    if(!obj) {
+        // PrintToChat(client, "%T", "secure_restriction", client);
+        return false;
+    }
+
     if(obj && IsPartValid(obj, part)) {
         obj.GetString(szBinds[part], szValue, sizeof(szValue));
     }
@@ -291,7 +323,7 @@ public Processing  cc_proc_OnRebuildString(const int[] props, int part, ArrayLis
         return Proc_Continue;
     }
 
-    objModel = asJSONO(asJSONO(ccp_GetPackage(0)).Get(pkgKey));
+    objModel = getClientModel(0);
     if(!objModel.HasKey("channels")) {
         delete objModel;
         return Proc_Continue;
@@ -302,9 +334,12 @@ public Processing  cc_proc_OnRebuildString(const int[] props, int part, ArrayLis
 
     char szIndent[64];
     params.GetString(0, szIndent, sizeof(szIndent));
-    if(!InChannels(channels, szIndent)) {
+    if(FindChannelInChannels_json(channels, szIndent) == -1) {
+        delete channels;
         return Proc_Continue;
     }
+
+    delete channels;
 
     objModel = getClientModel(SENDER_INDEX(props[1]));
     if(!objModel || !IsPartValid(objModel, part)) {
@@ -342,21 +377,4 @@ stock JSONObject getClientModel(int iClient) {
 
 stock bool IsPartValid(JSONObject model, int part) {
     return model.HasKey(szBinds[part]) && !model.IsNull(szBinds[part]);
-}
-
-stock bool InChannels(JSONArray channels, const char[] channel) {
-    static char szChannel[64];
-    static bool bIn;
-
-    bIn = false;
-    for(int i; i < channels.Length; i++) {
-        channels.GetString(i, szChannel, sizeof(szChannel));
-        if(!strcmp(szChannel, channel)) {
-            bIn = true
-            break;
-        }
-    }
-
-    delete channels;
-    return bIn;
 }

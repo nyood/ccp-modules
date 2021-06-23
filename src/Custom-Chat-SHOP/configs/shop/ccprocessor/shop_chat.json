@@ -2,10 +2,82 @@
     "channels": [
         "ST1", "STA", "STP"
     ],
+
+    "secure":       true,
     
     "{PREFIXCO}": [
         {
+            "value": "{W}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
             "value": "{R}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{T}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{G}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{P}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{LG}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{S}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{GR}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{BA}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{DG}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{C}",
 
             "price": 1000,
             "sellprice": 500,
@@ -17,19 +89,75 @@
             "price": 1000,
             "sellprice": 500,
             "duration": 86400
-        }
-    ],
-
-    "{PREFIX}": [
+        },
         {
-            "value": "lol_key",
+            "value": "{V}",
 
             "price": 1000,
             "sellprice": 500,
             "duration": 86400
         },
         {
-            "value": "air_key",
+            "value": "{PI}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{CO}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{GO}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        }
+    ],
+
+    "{PREFIX}": [
+        {
+            "value": "tag_lol",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "tag_air",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "tag_bug",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "tag_arrow",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "tag_poof",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "tag_whatsup",
 
             "price": 1000,
             "sellprice": 500,
@@ -37,9 +165,231 @@
         }
     ],
     "{NAMECO}": [
-        
+        {
+            "value": "{W}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{R}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{T}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{G}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{P}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{LG}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{S}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{GR}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{BA}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{DG}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{C}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{B}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{V}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{PI}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{CO}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{GO}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        }
     ],
     "{MSGCO}": [
-        
+        {
+            "value": "{W}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{R}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{T}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{G}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{P}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{LG}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{S}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{GR}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{BA}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{DG}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{C}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{B}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{V}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{PI}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{CO}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        },
+        {
+            "value": "{GO}",
+
+            "price": 1000,
+            "sellprice": 500,
+            "duration": 86400
+        }
     ]
 }

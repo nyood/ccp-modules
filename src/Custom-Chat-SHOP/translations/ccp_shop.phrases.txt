@@ -1,5 +1,11 @@
 "Phrases"
 {
+    "secure_restriction"
+    {
+        "ru"            "{W}Мы заподозрили что-то неладное, покупка временно ограничена"
+        "en"            "{W}We suspect something, the purchase is temporarily limited"
+    }
+
     "tag_display"
     {
         "#format"       "{1:s}"
@@ -7,36 +13,40 @@
         "en"            "Chat Tag: {1}"
     }
 
-    "lol_key"
+    "tag_lol"
     {
         "ru"            "[LOL]"
         "en"            "[LOL]"
     }
 
 
-    "air_key"
+    "tag_air"
     {
         "ru"            "~~~"
         "en"            "~~~"
     }
 
-    "input_value_set"
+    "tag_bug"
     {
-        "#format"       "{1:s}"
-        "ru"            "{W}Было установлено {G}{1} {W}в качестве значения!"
-        "en"            "{G}{1} {W}was set as the value "
+        "ru"            "|\0_0/|"
+        "en"            "|\0_0/|"
     }
 
-    "input_value_invalid"
+    "tag_arrow"
     {
-        "#format"       "{1:s}"
-        "ru"            "{W}Цвет {G}{1} {W}не существует в доступной палитре. Повторите ввод"
-        "en"            "{W}Color {G}{1} {W}does not exist in the available palette "
+        "ru"            "====>"
+        "en"            "====>"
     }
 
-    "input_custom_value"
+    "tag_poof"
     {
-        "ru"            "{W}Введите свое значение ниже:"
-        "en"            "{W}Input new value next:"
+        "ru"            "pooof ~"
+        "en"            "pooof ~"
+    }
+
+    "tag_whatsup"
+    {
+        "ru"            "what's UP!"
+        "en"            "what's UP!"
     }
 }
