@@ -121,7 +121,7 @@ Action EventTeam(Event event, const char[] name, bool dbc) {
         return Plugin_Continue;
     }
 
-    event.BroadcastDisabled = true;
+    event.SetBool("silent", true);
 
     if(event.GetInt("disconnect") || jConfig.GetBool("hideMessages")) {
         return Plugin_Changed;
